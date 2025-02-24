@@ -6,12 +6,14 @@ phases:
       python: 3.9
     commands:
       - pip install --upgrade pip
-      - pip install -r requirements.txt -t package/
+      - pip install -r requirements.txt -t package/  # Install dependencies inside package folder
   build:
     commands:
       - cp lambda_function.py package/
       - cp process_logs.py package/
-      - cd package && zip -r ../lambda-package.zip .
+      - cd package && zip -r ../lambda-package.zip .  # ZIP EVERYTHING INSIDE package/
+      - cd .. && zip -r lambda-package.zip package/  # 🔥 ADD package/ ITSELF
+  post_build:
 artifacts:
   files:
     - lambda-package.zip
