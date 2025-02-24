@@ -14,7 +14,10 @@ phases:
       - cd package && zip -r ../lambda-package.zip .  # ZIP EVERYTHING INSIDE package/
       - cd .. && zip -r lambda-package.zip package/  # 🔥 ADD package/ ITSELF
   post_build:
+    commands:
+      - ls -lah package/  # Debugging step to see what's in the package
 artifacts:
   files:
     - lambda-package.zip
+
 
