@@ -5,19 +5,21 @@ phases:
     runtime-versions:
       python: 3.9
     commands:
+      - mkdir -p package  # Ensure the package folder exists
       - pip install --upgrade pip
-      - pip install -r requirements.txt -t package/  # Install dependencies inside package folder
+      - pip install -r requirements.txt -t package/  # Install dependencies in package/
   build:
     commands:
-      - cp lambda_function.py package/
-      - cp process_logs.py package/
-      - cd package && zip -r ../lambda-package.zip .  # ZIP EVERYTHING INSIDE package/
-      - cd .. && zip -r lambda-package.zip package/  # 🔥 ADD package/ ITSELF
+      - cp lambda_function.py package/  # Copy function code into package/
+      - cp process_logs.py package/  # Copy log processing script into package/
+      - cd package && zip -r ../lambda-package.zip .  # Zip everything inside package/
+      - cd .. && zip -r lambda-package.zip package/  # Zip package/ itself
   post_build:
     commands:
-      - ls -lah package/  # Debugging step to see what's in the package
+      - ls -lah package/  # Debugging step to confirm dependencies were installed
 artifacts:
   files:
     - lambda-package.zip
+
 
 
