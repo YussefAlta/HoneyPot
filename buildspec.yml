@@ -14,7 +14,7 @@ phases:
   post_build:
     commands:
       - echo "Uploading package to S3..."
-      - aws s3 cp lambda-package.zip s3://lambda-code-deploy/
+      - aws s3 cp lambda-package.zip s3://lambdacodedeploy-ya/
 
 artifacts:
   files:
