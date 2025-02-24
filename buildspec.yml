@@ -5,11 +5,17 @@ phases:
     runtime-versions:
       python: 3.9
     commands:
+      - pip install --upgrade pip
       - pip install -r requirements.txt -t package/
   build:
     commands:
       - cp lambda_function.py package/
       - cd package && zip -r ../lambda-package.zip .
+  post_build:
+    commands:
+      - echo "Uploading package to S3..."
+      - aws s3 cp lambda-package.zip s3://lambda-code-deploy/
+
 artifacts:
   files:
     - lambda-package.zip
