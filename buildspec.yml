@@ -11,11 +11,6 @@ phases:
     commands:
       - cp lambda_function.py package/
       - cd package && zip -r ../lambda-package.zip .
-  post_build:
-    commands:
-      - echo "Uploading package to S3..."
-      - aws s3 cp lambda-package.zip s3://lambdacodedeploy-ya/
-
 artifacts:
   files:
     - lambda-package.zip
