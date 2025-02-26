@@ -1,0 +1,3 @@
+Upload logs every 5 minutes:
+
+*/5 * * * * python3 /home/ubuntu/upload_logs.py >> /home/ubuntu/upload_logs.log 2>&1 
