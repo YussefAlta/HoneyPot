@@ -1,0 +1,34 @@
+ssh -i Honeypot-KeyPair.pem ubuntu@<EC2-PUBLIC-IP> : Connect to EC2 instance via SSH
+
+sudo systemctl restart networking	: Restart networking on EC2
+
+sudo reboot :	Restart EC2 instance
+
+uname -a : Get system information
+
+sudo systemctl status cowrie : Check if Cowrie is running (if using systemd)
+
+source cowrie-env/bin/activate : Activate Cowrie virtual environment
+
+bin/cowrie start : Start Cowrie manually
+
+bin/cowrie stop	Stop : Cowrie manually
+
+bin/cowrie restart : Restart Cowrie
+
+`sudo ss -tulnp|grep 2222`
+
+tail -n 20 /home/ubuntu/cowrie/var/log/cowrie/cowrie.json	: View last 20 attack logs
+
+nano /home/ubuntu/cowrie/var/log/cowrie/cowrie.json	: Manually edit log file
+
+cp /home/ubuntu/cowrie/var/log/cowrie/cowrie.json 
+/home/ubuntu/cowrie/var/log/cowrie/cowrie_backup.json	: Backup log file
+
+ssh root@<EC2-PUBLIC-IP> -p 2222	: Simulate an attack on the honeypot
+
+crontab -e :	Edit scheduled cron jobs
+
+crontab -l  :	List existing cron jobs
+
+sudo systemctl restart cron	: Restart cron service
