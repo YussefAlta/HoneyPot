@@ -67,10 +67,10 @@ def generate_heatmap(attack_data):
 def upload_to_s3(image_buffer):
     """Upload heatmap image to S3"""
     s3.put_object(
-        Bucket=S3_BUCKET_NAME,
-        Key=HEATMAP_IMAGE_NAME,
+        Bucket=honeypot-logs-yussefaltaher,
+        Key=Heatmap,
         Body=image_buffer,
         ContentType="image/png",
         ACL="public-read"
     )
-    return f"https://{S3_BUCKET_NAME}.s3.amazonaws.com/{HEATMAP_IMAGE_NAME}"
+    return f"https://{honeypot-logs-yussefaltaher}.s3.amazonaws.com/{Heatmap}"
