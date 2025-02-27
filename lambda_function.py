@@ -1,5 +1,6 @@
 import json
 import process_logs
+import sys
 
 def lambda_handler(event, context):
     """AWS Lambda entry point to generate and upload heatmap"""
