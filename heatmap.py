@@ -66,11 +66,40 @@ def generate_heatmap(attack_data):
 
 def upload_to_s3(image_buffer):
     """Upload heatmap image to S3"""
-    s3.put_object(
-        Bucket=honeypot-logs-yussefaltaher,
-        Key=Heatmap,
-        Body=image_buffer,
-        ContentType="image/png",
-        ACL="public-read"
-    )
-    return f"https://{honeypot-logs-yussefaltaher}.s3.amazonaws.com/{Heatmap}"
+    try:
+        s3.put_object(
+            Bucket=S3_BUCKET_NAME,
+            Key=HEATMAP_IMAGE_NAME,
+            Body=image_buffer,
+            ContentType="image/png",
+            ACL="public-read"
+        )
+        return f"https://{S3_BUCKET_NAME}.s3.amazonaws.com/{HEATMAP_IMAGE_NAME}"
+    except Exception as e:
+        print(f"❌ Failed to upload heatmap to S3: {e}")
+        return None
+
+def main():
+    """Main function to generate and upload the heatmap"""
+    print("📡 Fetching attack logs from DynamoDB...")
+    attack_logs = get_attack_logs()
+
+    if not attack_logs:
+        print("⚠️ No attack logs found. Exiting.")
+        return
+
+    print("🗺️ Generating heatmap...")
+    heatmap_buffer = generate_heatmap(attack_logs)
+
+    print("☁️ Uploading heatmap to S3...")
+    image_url = upload_to_s3(heatmap_buffer)
+
+    if image_url:
+        print(f"✅ Heatmap uploaded successfully: {image_url}")
+    else:
+        print("❌ Heatmap upload failed.")
+
+if __name__ == "__main__":
+    main()
+
+
